@@ -1,20 +1,35 @@
 import config from '../config.js'
-const { List } from 'immutable'
+const { List, fromJS } from 'immutable'
 
 function genDefaultMatrix() {
-  // nice and ugly
-  return List([Array(config.ROWCOUNT).fill(List([Array(config.COLCOUNT).fill(config.defaultTileColor)]))])
+  return fromJS(Array(config.ROWCOUNT).fill(Array(config.COLCOUNT).fill(config.defaultTileColor)))
 }
 
-export default function matrix(state={matrix: genDefaultMatrix()}, action) {
+// Applying a mutation to create a new immutable object results in some overhead,
+// which can add up to a minor performance penalty. If you need to apply a series
+// of mutations locally before returning, Immutable gives you the ability to create
+// a temporary mutable (transient) copy of a collection and apply a batch of
+// mutations in a performant manner by using withMutations. In fact, this is
+// exactly how Immutable applies complex mutations itself.
+
+const DEFAULTSTATE = {
+  selectedColor: config.DEFAULTCOLOR,
+  matrix: genDefaultMatrix()
+}
+
+export default function matrix(state=DEFAULTSTATE, action) {
   switch (action.type) {
     case "SET_MATRIX":
-      return { matrix: action.payload.matrix }
+      return { state.selectedColor, matrix: fromJS([action.payload.matrix]) }
     case "SET_CELL_VALUES":
-      action.payload.matrixUpdates.forEach(update => {
-
+      const updatedMatrix = state.matrix.withMutations(matrix => {
+        action.payload.forEach(update => {
+          matrix[update.x][update.y] = update.color
+        })
       })
-      return { matrix: }
+      return { state.selectedColor, matrix: updatedMatrix }
+    case "SET_SELECTED_COLOR":
+      return { selectedColor: action.payload, state.matrix }
     default:
       return state
   }

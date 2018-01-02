@@ -1,5 +1,7 @@
 import React from 'react';
-import { sendUpdate } from '../ws-conn/ws.js'
+import { setCellValues } from '../actions/index.js'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 
 const GridCell = (props) => {
 
@@ -8,22 +10,16 @@ const GridCell = (props) => {
          colidx={props.colIdx}
          className="grid-cell"
          style={{backgroundColor: props.color}}
-         onClick={(e) => changeColor(e, props.rowIdx, props.colIdx)}>
+         onClick={props.setCellValues.bind(this, props.rowIdx, props.colIdx, props.selectedColor)}>
     </div>
   );
 }
 
 
-function changeColor(event, x, y) {
-  const cell = event.target
-  if (event.target.style.backgroundColor !== 'blue') {
-    // debugger
-    sendUpdate('changeTile', x, y, '#00F')
-    event.target.style.backgroundColor = 'blue'
-  } else {
-    event.target.style.backgroundColor = 'red'
-    sendUpdate('changeTile', x, y, '#F00')
-  }
+mapDispatchToProps => (dispatch) => {
+  return bindActionCreators({ setCellValues: setCellValues}, dispatch)
 }
 
-export default GridCell;
+const mapStateToProps = ({ selectedColor }) => ({ selectedColor })
+
+export default connect(mapStateToProps, mapDispatchToProps)(GridCell)

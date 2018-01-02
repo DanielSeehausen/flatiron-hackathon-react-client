@@ -3,13 +3,9 @@ import ColorSelector from './ColorSelector';
 
 class ColorSelectorMenu extends Component {
 
-  selectColor = (color) => {
-    debugger
-  }
-
   generateColorBoxes = () => {
     const colors = ['#FCC', '#F00', '#F80', '#FF0', '#0F0', '#0FF', '#00F', '#408', '#93E', '#741', '#FFF', '#888', '#000']
-    return colors.map((color, idx) => (<ColorSelector key={idx} color={color} selectColor={this.selectColor.bind(this, color)} />))
+    return colors.map((color, idx) => (<ColorSelector key={idx} color={color} />))
   }
 
   render() {
