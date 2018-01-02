@@ -1,8 +1,8 @@
 import config from '../config.js'
-const { List, fromJS } from 'immutable'
+import { List, Map, fromJS } from 'immutable'
 
 function genDefaultMatrix() {
-  return fromJS(Array(config.ROWCOUNT).fill(Array(config.COLCOUNT).fill(config.defaultTileColor)))
+  return fromJS(Array(config.ROWCOUNT).fill(Array(config.COLCOUNT).fill(config.DEFAULTCOLOR)))
 }
 
 // Applying a mutation to create a new immutable object results in some overhead,
@@ -20,16 +20,19 @@ const DEFAULTSTATE = {
 export default function matrix(state=DEFAULTSTATE, action) {
   switch (action.type) {
     case "SET_MATRIX":
-      return { state.selectedColor, matrix: fromJS([action.payload.matrix]) }
+      return { matrix: fromJS([action.payload.matrix]), selectedColor: state.selectedColor }
+    case "SET_CELL_VALUE":
+      const p = action.payload
+      return { matrix: state.matrix.setIn([p.x, p.y], state.selectedColor), selectedColor: state.selectedColor }
     case "SET_CELL_VALUES":
       const updatedMatrix = state.matrix.withMutations(matrix => {
         action.payload.forEach(update => {
           matrix[update.x][update.y] = update.color
         })
       })
-      return { state.selectedColor, matrix: updatedMatrix }
+      return { matrix: updatedMatrix, selectedColor: state.selectedColor }
     case "SET_SELECTED_COLOR":
-      return { selectedColor: action.payload, state.matrix }
+      return {matrix: state.matrix, selectedColor: action.payload}
     default:
       return state
   }

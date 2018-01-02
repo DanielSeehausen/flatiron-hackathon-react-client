@@ -6,16 +6,16 @@ export function setMatrix() {
   }
 }
 
-export function setCellValues(x, y, color) {
-  sendUpdate('changeTile', x, y, color)
 
-  return (dispatch) => {
-    dispatch({action: "SET_CELL_VALUES", payload: [{x, y, color}]})
-  }
+export function setCellValues(values) {
+  return {type: "SET_CELL_VALUES", payload: values}
+}
+
+export function setCellValue(x, y, color) {
+  // sendUpdate('changeTile', x, y, color)
+  return {type: "SET_CELL_VALUE", payload: {x, y, color}}
 }
 
 export function setSelectedColor(color) {
-  return (dispatch) => {
-    dispatch({action: "SET_SELECTED_COLOR", payload: color})
-  }
+  return {type: "SET_SELECTED_COLOR", payload: color}
 }

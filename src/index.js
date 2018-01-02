@@ -4,7 +4,8 @@ import './index.css'
 import App from './components/App'
 import registerServiceWorker from './registerServiceWorker'
 import { createStore } from "redux"
-import { matrix } from "./reducers/index.js"
+import { Provider } from "react-redux";
+import matrix from "./reducers/index.js"
 
 
 const store = createStore(matrix)

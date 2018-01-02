@@ -1,25 +1,27 @@
 import React from 'react';
-import { setCellValues } from '../actions/index.js'
+import { setCellValue } from '../actions/index.js'
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
 
 const GridCell = (props) => {
-
   return (
-    <div rowidx={props.rowIdx}
+    <div
+         id={`${props.rowIdx}-${props.colIdx}`}
+         rowidx={props.rowIdx}
          colidx={props.colIdx}
          className="grid-cell"
          style={{backgroundColor: props.color}}
-         onClick={props.setCellValues.bind(this, props.rowIdx, props.colIdx, props.selectedColor)}>
+         onClick={props.setCellValue.bind(this, props.rowIdx, props.colIdx)}>
     </div>
   );
 }
 
-
-mapDispatchToProps => (dispatch) => {
-  return bindActionCreators({ setCellValues: setCellValues}, dispatch)
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setCellValue: (x, y) => {
+      dispatch(setCellValue(x, y))
+    }
+  }
 }
 
-const mapStateToProps = ({ selectedColor }) => ({ selectedColor })
 
-export default connect(mapStateToProps, mapDispatchToProps)(GridCell)
+export default connect(null, mapDispatchToProps)(GridCell)

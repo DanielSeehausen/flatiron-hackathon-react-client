@@ -1,18 +1,20 @@
-import React, { Component } from 'react';
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
+import React from 'react';
 import { setSelectedColor } from '../actions/index.js'
+import { connect } from 'react-redux'
 
-const ColorSelector = ({ color }) => {
+const ColorSelector = ({ color, setSelectedColor }) => {
   return (
-    <div className='color-selector-box' onClick={setSelectedColor.bind(this, color)} >
-      <div className='color-selector' style={{backgroundColor: color}} />
+    <div className='color-selector-box' >
+      <div className='color-selector' onClick={setSelectedColor.bind(this, color)} style={{backgroundColor: color}} />
     </div>
   )
 }
 
-mapDispatchToProps => (dispatch) => {
-  return bindActionCreators({ setSelectedColor: setSelectedColor}, dispatch)
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setSelectedColor: (color) => {
+      dispatch(setSelectedColor(color))
+    }
+  }
 }
-
-export default connect(mapDispatchToProps)(ColorSelector)
+export default connect(null, mapDispatchToProps)(ColorSelector)
