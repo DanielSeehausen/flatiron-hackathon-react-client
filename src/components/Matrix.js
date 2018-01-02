@@ -1,16 +1,10 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+import { connect } from "react-redux"
 import GridRow from './GridRow'
-import config from '../config.js'
 
 class Matrix extends Component {
 
-  genRow = (colCount) => (Array(colCount).fill(config.defaultTileColor))
-
-  state = {
-    matrix: Array(config.rowCount).fill(this.genRow(config.colCount))
-  }
-
-  makeRows = () => this.state.matrix.map((row, rowIdx) => <GridRow key={rowIdx} rowIdx={rowIdx} colVals={row}/>)
+  makeRows = () => this.props.matrix.map((row, rowIdx) => <GridRow key={rowIdx} rowIdx={rowIdx} colVals={row}/>)
 
   render() {
     return (
@@ -21,4 +15,6 @@ class Matrix extends Component {
   }
 }
 
-export default Matrix;
+const mapStateToProps = ({ matrix }) => ({ matrix })
+
+export default connect(mapStateToProps)(Matrix)
