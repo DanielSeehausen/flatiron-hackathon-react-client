@@ -1,9 +1,8 @@
 const config = {
   wsServerEndpoint: 'ws://localhost:8080',
   DEFAULTCOLOR: '#eee',
-  ROWCOUNT: 100,
-  COLCOUNT: 100,
-  CELLLENGTH: '5px',
+  ROWCOUNT: 10,
+  COLCOUNT: 10,
   SPEED: true,
 }
 

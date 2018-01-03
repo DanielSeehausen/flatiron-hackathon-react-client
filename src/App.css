@@ -1,3 +1,7 @@
+div {
+  cursor: default;
+}
+
 #root {
   display: block;
   flex-direction: column;
@@ -16,8 +20,13 @@
   justify-content: center;
 }
 
-.block-picker {
+#block-picker-wrapper {
   position: absolute;
+  top: 10%;
+  left: 10%;
+}
+
+.block-picker {
   border: 3px #222 solid;
   border-radius: 10px;
 }

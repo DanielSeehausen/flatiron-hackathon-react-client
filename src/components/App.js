@@ -7,19 +7,29 @@ import { BlockPicker } from 'react-color';
 // import ColorSelectorMenu from './ColorSelectorMenu'
 import { setSelectedColor } from '../actions/index.js'
 import { connect } from 'react-redux'
+
 class App extends Component {
+
+  state = {
+    draggingDisabled: true
+  }
 
   componentDidMount() {
     connectWS()
   }
 
+  dragHandler = (e) => {
+    // really no nice way to do this -- is a known issue. This mouseOver instead of onClick/mouseDown saves us from a required double click
+    (e.target.tagName === "INPUT") ? this.setState({draggingDisabled: true}) : this.setState({draggingDisabled: false})
+  }
   render() {
     return (
-      <div className="App">
+      <div className="App" >
         <Matrix />
-        <Draggable defaultPosition={{x: 50, y: 50}}>
-          <div id='block-picker-wrapper'>
+        <Draggable disabled={this.state.draggingDisabled} defaultPosition={{x: 50, y: 50}}>
+          <div id='block-picker-wrapper' onMouseOver={this.dragHandler}>
             <BlockPicker
+              color={this.props.selectedColor}
               onChangeComplete={(color) => this.props.setSelectedColor(color.hex)}
               triangle='hide'
             />
@@ -38,4 +48,6 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(null, mapDispatchToProps)(App)
+const mapStateToProps = ({ selectedColor }) => ({ selectedColor })
+
+export default connect(mapStateToProps, mapDispatchToProps)(App)
