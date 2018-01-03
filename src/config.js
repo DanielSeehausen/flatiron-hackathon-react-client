@@ -3,6 +3,7 @@ const config = {
   DEFAULTCOLOR: '#eee',
   ROWCOUNT: 100,
   COLCOUNT: 100,
+  CELLLENGTH: '5px',
   SPEED: true,
 }
 
