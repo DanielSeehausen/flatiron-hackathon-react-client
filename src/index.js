@@ -5,11 +5,13 @@ import App from './components/App'
 import registerServiceWorker from './registerServiceWorker'
 import { createStore } from "redux"
 import { Provider } from "react-redux";
-import matrix from "./reducers/index.js"
+import config from "./config.js"
+import speedReducer from "./reducers/speedIndex.js"
+import reducer from "./reducers/index.js"
 
 
-const store = createStore(matrix)
-
+const store = createStore(config.SPEED ? speedReducer : reducer)
+console.log(store);
 ReactDOM.render(
   <Provider store={store}>
     <App />

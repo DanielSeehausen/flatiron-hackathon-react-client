@@ -27,7 +27,7 @@ export default function matrix(state=DEFAULTSTATE, action) {
     case "SET_CELL_VALUES":
       const updatedMatrix = state.matrix.withMutations(matrix => {
         action.payload.forEach(update => {
-          matrix[update.x][update.y] = update.color
+             matrix.setIn([update.x, update.y], update.color)
         })
       })
       return { matrix: updatedMatrix, selectedColor: state.selectedColor }

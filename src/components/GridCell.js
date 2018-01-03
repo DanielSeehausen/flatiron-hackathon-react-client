@@ -10,7 +10,7 @@ const GridCell = (props) => {
          colidx={props.colIdx}
          className="grid-cell"
          style={{backgroundColor: props.color}}
-         onClick={props.setCellValue.bind(this, props.rowIdx, props.colIdx)}>
+         onMouseDown={props.setCellValue.bind(this, props.rowIdx, props.colIdx)}>
     </div>
   );
 }
