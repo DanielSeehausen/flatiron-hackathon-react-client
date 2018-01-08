@@ -6,12 +6,10 @@ import registerServiceWorker from './registerServiceWorker'
 import { createStore } from "redux"
 import { Provider } from "react-redux";
 import config from "./config.js"
-import speedReducer from "./reducers/speedIndex.js"
 import reducer from "./reducers/index.js"
 
+const store = createStore(reducer)
 
-const store = createStore(config.SPEED ? speedReducer : reducer)
-console.log(store);
 ReactDOM.render(
   <Provider store={store}>
     <App />
@@ -19,3 +17,5 @@ ReactDOM.render(
   document.getElementById('root')
 );
 registerServiceWorker();
+
+export default store

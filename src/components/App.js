@@ -1,21 +1,23 @@
 import '../App.css';
 import React, { Component } from 'react';
-import connectWS from '../ws-conn/ws.js'
 import Matrix from './Matrix'
 import Draggable from 'react-draggable';
 import { BlockPicker } from 'react-color';
 // import ColorSelectorMenu from './ColorSelectorMenu'
 import { setSelectedColor } from '../actions/index.js'
 import { connect } from 'react-redux'
+import config from '../config.js'
+import initWS from '../ws-conn/wsInit.js'
 
 class App extends Component {
 
-  state = {
-    draggingDisabled: true
-  }
-
-  componentDidMount() {
-    connectWS()
+  constructor() {
+    super()
+    this.state = {
+      draggingDisabled: true,
+      ws: null
+    }
+    initWS()
   }
 
   dragHandler = (e) => {

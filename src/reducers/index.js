@@ -1,16 +1,15 @@
 import config from '../config.js'
-import { List, Map, fromJS } from 'immutable'
 
 function genDefaultMatrix() {
-  return fromJS(Array(config.ROWCOUNT).fill(Array(config.COLCOUNT).fill(config.DEFAULTCOLOR)))
+  const matrix = Array(config.ROWCOUNT)
+  for (let rowIdx = 0; rowIdx < config.ROWCOUNT; rowIdx++)
+    matrix[rowIdx] = Array(config.COLCOUNT).fill(config.DEFAULTCOLOR)
+  return matrix
 }
 
-// Applying a mutation to create a new immutable object results in some overhead,
-// which can add up to a minor performance penalty. If you need to apply a series
-// of mutations locally before returning, Immutable gives you the ability to create
-// a temporary mutable (transient) copy of a collection and apply a batch of
-// mutations in a performant manner by using withMutations. In fact, this is
-// exactly how Immutable applies complex mutations itself.
+function assignCellColor(x, y, color) {
+  document.getElementById(`${x}-${y}`).style.backgroundColor
+}
 
 const DEFAULTSTATE = {
   selectedColor: config.DEFAULTCOLOR,
@@ -20,17 +19,14 @@ const DEFAULTSTATE = {
 export default function matrix(state=DEFAULTSTATE, action) {
   switch (action.type) {
     case "SET_MATRIX":
-      return { matrix: fromJS([action.payload.matrix]), selectedColor: state.selectedColor }
+      return { matrix: action.payload.matrix, selectedColor: state.selectedColor }
     case "SET_CELL_VALUE":
       const p = action.payload
-      return { matrix: state.matrix.setIn([p.x, p.y], state.selectedColor), selectedColor: state.selectedColor }
+      document.getElementById(`${p.x}-${p.y}`).style.backgroundColor = state.selectedColor
+      return state
     case "SET_CELL_VALUES":
-      const updatedMatrix = state.matrix.withMutations(matrix => {
-        action.payload.forEach(update => {
-             matrix.setIn([update.x, update.y], update.color)
-        })
-      })
-      return { matrix: updatedMatrix, selectedColor: state.selectedColor }
+      action.payload.forEach(({x, y, color}) => { assignCellColor(x, y, color) })
+      return state
     case "SET_SELECTED_COLOR":
       return {matrix: state.matrix, selectedColor: action.payload}
     default:

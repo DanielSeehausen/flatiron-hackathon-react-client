@@ -1,9 +1,7 @@
-const config = {
-  wsServerEndpoint: 'ws://localhost:8080',
+module.exports = {
+  WSSERVERENDPOINT: 'ws://localhost:8080',
   DEFAULTCOLOR: '#eee',
-  ROWCOUNT: 10,
-  COLCOUNT: 10,
+  ROWCOUNT: 100,
+  COLCOUNT: 100,
   SPEED: true,
 }
-
-export default config
