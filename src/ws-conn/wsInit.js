@@ -5,7 +5,8 @@ const GREETING = "Client websocket opened"
 const FAREWELL = "Client websocket closed"
 const ERROR = "Client websocket errored"
 
-const wsConn = new WebSocket(config.WSSERVERENDPOINT)
+console.log('wot?')
+const wsConn = wsConn || new WebSocket(config.WSSERVERENDPOINT)
 
 function unpack(data) {
   const msg = JSON.parse(data)
@@ -14,8 +15,8 @@ function unpack(data) {
 
 function dispatch(data) {
   const [action, payload] = unpack(data)
+  console.log("FROM WSS: ", action, payload);
   // TODO why default and require's needed there?
-  console.log(action);
   dispatcher.default[action](payload)
 }
 
@@ -37,8 +38,6 @@ function initEventListeners() {
 
   wsConn.addEventListener('error', (e) => {console.error(ERROR, e.data)})
 }
-
-initEventListeners()
 
 export default function init() {
   initEventListeners()

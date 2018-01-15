@@ -10,18 +10,20 @@ const GridCell = (props) => {
          colidx={props.colIdx}
          className="grid-cell"
          style={{backgroundColor: props.color}}
-         onMouseDown={props.setCellValue.bind(this, props.rowIdx, props.colIdx)}>
+         onMouseDown={props.setCellValue.bind(this, props.rowIdx, props.colIdx, props.selectedColor)}>
     </div>
   );
 }
 
+const mapStateToProps = ({ selectedColor }) => ({ selectedColor })
+
 const mapDispatchToProps = (dispatch) => {
   return {
-    setCellValue: (x, y) => {
-      dispatch(setCellValue(x, y))
+    setCellValue: (x, y, color) => {
+      dispatch(setCellValue(x, y, color))
     }
   }
 }
 
 
-export default connect(null, mapDispatchToProps)(GridCell)
+export default connect(mapStateToProps, mapDispatchToProps)(GridCell)

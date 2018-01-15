@@ -1,4 +1,5 @@
 import config from '../config.js'
+import { send } from '../ws-conn/wsInit.js'
 
 function genDefaultMatrix() {
   const matrix = Array(config.ROWCOUNT)
@@ -19,7 +20,7 @@ const DEFAULTSTATE = {
 export default function matrix(state=DEFAULTSTATE, action) {
   switch (action.type) {
     case "SET_MATRIX":
-      return { matrix: action.payload.matrix, selectedColor: state.selectedColor }
+      return { matrix: action.payload, selectedColor: state.selectedColor }
     case "SET_CELL_VALUE":
       const p = action.payload
       document.getElementById(`${p.x}-${p.y}`).style.backgroundColor = state.selectedColor

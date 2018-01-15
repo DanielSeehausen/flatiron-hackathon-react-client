@@ -9,7 +9,7 @@ class Matrix extends Component {
   render() {
     return (
       <div id="matrix" style={{height: this.props.matrix}}>
-        {this.makeRows()}
+        {this.props.matrix ? this.makeRows() : null}
       </div>
     );
   }

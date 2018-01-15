@@ -1,9 +1,9 @@
-import {setMatrix} from '../actions/index.js'
+import { setMatrix, setCellValue } from '../actions/index.js'
 import store from '../index.js'
 
 function setTile(update) {
-  const {x, y, color} = update
-  document.getElementById(`${x}-${y}`).style.backgroundColor = color
+  // skipping the action because it sends a msg to the websocket
+  store.dispatch({type: "SET_CELL_VALUE", payload: update})
 }
 
 function setTiles(updates) {

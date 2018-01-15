@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import Matrix from './Matrix'
 import Draggable from 'react-draggable';
 import { BlockPicker } from 'react-color';
-// import ColorSelectorMenu from './ColorSelectorMenu'
 import { setSelectedColor } from '../actions/index.js'
 import { connect } from 'react-redux'
 import config from '../config.js'
@@ -17,6 +16,7 @@ class App extends Component {
       draggingDisabled: true,
       ws: null
     }
+    console.log('poop');
     initWS()
   }
 
