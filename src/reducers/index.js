@@ -23,7 +23,7 @@ export default function matrix(state=DEFAULTSTATE, action) {
       return { matrix: action.payload, selectedColor: state.selectedColor }
     case "SET_CELL_VALUE":
       const p = action.payload
-      document.getElementById(`${p.x}-${p.y}`).style.backgroundColor = state.selectedColor
+      document.getElementById(`${p.x}-${p.y}`).style.backgroundColor = p.color
       return state
     case "SET_CELL_VALUES":
       action.payload.forEach(({x, y, color}) => { assignCellColor(x, y, color) })

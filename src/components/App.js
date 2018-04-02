@@ -16,7 +16,6 @@ class App extends Component {
       draggingDisabled: true,
       ws: null
     }
-    console.log('poop');
     initWS()
   }
 

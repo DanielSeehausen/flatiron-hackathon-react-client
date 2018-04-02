@@ -2,7 +2,9 @@ import React from 'react';
 import { setCellValue } from '../actions/index.js'
 import { connect } from 'react-redux'
 
+
 const GridCell = (props) => {
+
   return (
     <div
          id={`${props.rowIdx}-${props.colIdx}`}
