@@ -1,19 +1,19 @@
-import '../App.css';
+import '../App.css'
 import React, { Component } from 'react';
 import Matrix from './Matrix'
 import Draggable from 'react-draggable';
 import { BlockPicker } from 'react-color';
-import { setSelectedColor } from '../actions/index.js'
 import config from '../config.js'
 
 
-class App extends Component {
+export default class App extends Component {
 
   constructor() {
     super()
     this.state = {
       draggingDisabled: true,
-      ws: null
+      ws: null,
+      color: config.selectedColor
     }
   }
 
@@ -22,6 +22,7 @@ class App extends Component {
     (e.target.tagName === "INPUT") ? this.setState({draggingDisabled: true}) : this.setState({draggingDisabled: false})
   }
 
+  // this dragger coercing me to do really hacky bad...config acting as bad store. this.state only used for color selector image :/
   render() {
     return (
       <div className="App" >
@@ -29,8 +30,8 @@ class App extends Component {
         <Draggable disabled={this.state.draggingDisabled} defaultPosition={{x: 50, y: 50}}>
           <div id='block-picker-wrapper' onMouseOver={this.dragHandler}>
             <BlockPicker
-              color={config.SELECTEDCOLOR}
-              onChangeComplete={ color => {config.selectedColor = color.hex} }
+              color={this.state.color}
+              onChangeComplete={ color => {config.selectedColor = color.hex; this.setState({color: color.hex})} }
               triangle='hide'
             />
           </div>
@@ -39,5 +40,3 @@ class App extends Component {
     )
   }
 }
-
-export default App
