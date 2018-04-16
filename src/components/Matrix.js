@@ -1,20 +1,31 @@
-import React, { Component } from 'react'
-import { connect } from "react-redux"
+import React from 'react'
 import GridRow from './GridRow'
+import config from '../config.js'
+import initWS from '../conn/wsInit.js'
 
-class Matrix extends Component {
+const DEFAULTMATRIX = () => {
+  const matrix = Array(config.ROWCOUNT)
+  for (let rowIdx = 0; rowIdx < config.ROWCOUNT; rowIdx++)
+    matrix[rowIdx] = Array(config.COLCOUNT).fill(config.DEFAULTCOLOR)
+  return matrix
+}
 
-  makeRows = () => this.props.matrix.map((row, rowIdx) => <GridRow key={rowIdx} rowIdx={rowIdx} colVals={row}/>)
+class Matrix {
+
+  constructor() {
+    this.matrix = DEFAULTMATRIX
+    initWS() // kicks off the websocket. instead of components and v-dom holding state on cell colors, going to alter dom styling directly. for speed but is naughty to do with react.
+  }
+
+  getRows = () => this.state.matrix.map((row, rowIdx) => <GridRow key={rowIdx} rowIdx={rowIdx} cellVals={row}/>)
 
   render() {
     return (
-      <div id="matrix" style={{height: this.props.matrix}}>
-        {this.props.matrix ? this.makeRows() : null}
+      <div id="matrix" style={{height: props.matrix}}>
+        { this.getRows() }
       </div>
-    );
+    )
   }
 }
 
-const mapStateToProps = ({ matrix }) => ({ matrix })
-
-export default connect(mapStateToProps)(Matrix)
+export default Matrix

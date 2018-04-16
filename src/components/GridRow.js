@@ -1,17 +1,19 @@
-import React, { Component } from 'react';
+import React from 'react';
 import GridCell from './GridCell'
 
-class GridRow extends Component {
-
-  genCols = () => this.props.colVals.map((val, colIdx) => <GridCell key={colIdx} rowIdx={this.props.rowIdx} colIdx={colIdx} color={val}/> )
+const GridRow = (props) => {
 
   render() {
     return (
       <div className='grid-row'>
-        {this.genCols()}
+        {
+          props.cellVals.map((val, colIdx) => (
+            <GridCell key={colIdx} rowIdx={this.props.rowIdx} colIdx={colIdx} color={val}/>
+          )
+        }
       </div>
-    );
+    )
   }
 }
 
-export default GridRow;
+export default GridRow
